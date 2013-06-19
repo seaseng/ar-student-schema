@@ -27,6 +27,7 @@ describe Student, "#name and #age" do
   end
 
   it "should be the right age" do
+
     now = Date.today
     age = now.year - @student.birthday.year - ((now.month > @student.birthday.month || (now.month == @student.birthday.month && now.day >= @student.birthday.day)) ? 0 : 1)
     @student.age.should == age
@@ -53,7 +54,7 @@ describe Student, "validations" do
     )
   end
 
-  it "should accept valid info" do
+  it "should accept valid info hi" do
     @student.should be_valid
   end
 
