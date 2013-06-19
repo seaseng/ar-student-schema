@@ -8,8 +8,8 @@ class Student < ActiveRecord::Base
   validates :email, :format => { :with => /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/, :message => "Invalid Email" }
   validates :email, :uniqueness => true
   validate :is_toddler
-  validates :phone, :format => { :with => /(\(\d{3}\)) \d{3}-\d{4} x\d{4}/, :message => "Invalid Phone"}
-  
+  validates :phone, :format => { :with => /\d{3}-\d{3}-\d{4}/, :message => "Invalid Phone"}
+
   def is_toddler
     errors.add(:birthday, 'must be a valid datetime') unless self.age > 5 
   end
@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
   end
 
   def name
-   self[:first_name] + ' ' + self[:last_name]
+   self[:name]
   end
 
   def age
