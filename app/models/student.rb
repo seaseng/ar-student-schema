@@ -10,6 +10,8 @@ class Student < ActiveRecord::Base
   validate :is_toddler
   validates :phone, :format => { :with => /\d{3}-\d{3}-\d{4}/, :message => "Invalid Phone"}
 
+  has_and_belongs_to_many :teachers
+
   def is_toddler
     errors.add(:birthday, 'must be a valid datetime') unless self.age > 5 
   end

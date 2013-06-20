@@ -33,6 +33,51 @@ task "db:version" do
   puts "Current version: #{ActiveRecord::Migrator.current_version}"
 end
 
+desc 'Teacher Data'
+task "db:seed_teacher" do
+  9.times do
+    teacher = Teacher.new
+    until teacher.valid?
+    teacher = Teacher.new(:name => Faker::Name.first_name,
+                     :email => Faker::Internet.email,
+                     :phone => Faker::PhoneNumber.phone_number,
+                     :address => Faker::Address.street_address)
+    end
+    teacher.save
+
+  end
+end
+
+desc 'Map Students'
+task "db:assign_student" do
+  ids1 = Teacher.pluck(:id)
+  ids2 = Student.pluck(:id)
+
+  100.times do
+    StudentTeacher.create(teacher_id: ids1.sample, student_id: ids2.sample)
+  end
+end
+
+desc 'Driver Code'
+task "db:driver" do
+student = Student.find(28)
+teacher = Teacher.find(15)
+
+p "Student"
+p student
+puts
+p "Teachers for this student"
+p student.teachers
+
+p "TEacher"
+p teacher
+puts
+p "Studetns for this teacher"
+p teacher.students
+end
+
+
+
 desc "Run the specs"
 RSpec::Core::RakeTask.new(:specs)
 
